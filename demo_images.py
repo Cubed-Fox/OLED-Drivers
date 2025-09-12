@@ -1,18 +1,17 @@
 """SSD1309 demo (images)."""
 from time import sleep
-from machine import Pin, SPI  # type: ignore
+from machine import Pin, I2C  # type: ignore
 from ssd1309 import Display
 
 
 def test():
     """Test code."""
-    spi = SPI(1, baudrate=10000000, sck=Pin(14), mosi=Pin(13))
-    display = Display(spi, dc=Pin(4), cs=Pin(5), rst=Pin(2))
-    # i2c = I2C(0, freq=400000, scl=Pin(5), sda=Pin(4))  # Pico I2C bus 1
-    # display = Display(i2c=i2c, rst=Pin(2))
+    #spi = SPI(1, baudrate=10000000, sck=Pin(14), mosi=Pin(13))
+    #display = Display(spi, dc=Pin(4), cs=Pin(5), rst=Pin(2))
+    i2c = I2C(0, freq=400000, scl=Pin(5), sda=Pin(4))  # Pico I2C bus 1
+    display = Display(i2c=i2c, rst=Pin(2))
 
-    display.draw_bitmap("images/eyes_128x42.mono", 0, display.height // 2 - 21,
-                        128, 42)
+    display.draw_bitmap("images/eyes_128x42.mono", 0, display.height // 2 - 21, 128, 42)
     display.present()
     sleep(5)
 
