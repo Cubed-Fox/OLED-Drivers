@@ -1,21 +1,19 @@
 """SSD1309 demo (fonts)."""
 from time import sleep
-from machine import Pin, SPI  # type: ignore
+from machine import Pin, I2C  # type: ignore
 from xglcd_font import XglcdFont
 from ssd1309 import Display
 
 
 def test():
     """Test code."""
-    spi = SPI(1, baudrate=10000000, sck=Pin(14), mosi=Pin(13))
-    display = Display(spi, dc=Pin(4), cs=Pin(5), rst=Pin(2))
-    # i2c = I2C(0, freq=400000, scl=Pin(5), sda=Pin(4))  # Pico I2C bus 1
-    # display = Display(i2c=i2c, rst=Pin(2))
+    i2c = I2C(0, freq=400000, scl=Pin(1), sda=Pin(0))  # Pico I2C bus 1
+    display = Display(i2c=i2c, rst=Pin(2), flip=True)
 
     print("Loading fonts.  Please wait.")
     bally = XglcdFont('fonts/Bally7x9.c', 7, 9)
-    rototron = XglcdFont('fonts/Robotron13x21.c', 13, 21)
-    unispace = XglcdFont('fonts/Unispace12x24.c', 12, 24)
+    rototron = XglcdFont('fonts/Robotron7x11.c', 7, 11)
+    unispace = XglcdFont('fonts/ArcadePix9x11.c', 9, 11)
     wendy = XglcdFont('fonts/Wendy7x8.c', 7, 8)
 
     print("Drawing fonts.")
